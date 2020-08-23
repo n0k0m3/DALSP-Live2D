@@ -11,14 +11,13 @@ def main():
     parser = OptionParser()
     parser.add_option("-d", "--data", dest="dataPath",
                       help="Data Source (contains res, src, TFFramework folder)", metavar="\"DATA_FOLDER\"")
-    parser.add_option("-o", "--output", dest="wkPath", default=os.path.join(os.getcwd(),"Live2D_output"),
+    parser.add_option("-o", "--output", dest="wkPath", default=os.path.join(os.getcwd(), "Live2D_output"),
                       help="Output Directory, Live2D Assets will be copied here", metavar="\"OUTPUT\"")
     parser.add_option("-n", "--name", dest="spirit_need",
                       help="Decrypted Data Destination (MUST BE A FOLDER)", metavar="\"SPIRIT_NAME\"")
     parser.add_option("-v", "--verbose",
                       action="store_true", dest="verbose", default=False,
                       help="Print debug messages to stdout")
-
 
     (options, args) = parser.parse_args()
 
@@ -27,7 +26,8 @@ def main():
         print()
         return
     l2d.getfile(options)
-    print("[INFO]","Done!")
+    print("[INFO]", "Done!")
+
 
 if __name__ == "__main__":
     main()
