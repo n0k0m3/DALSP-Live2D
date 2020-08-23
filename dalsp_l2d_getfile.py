@@ -4,6 +4,7 @@ import shutil
 import lupa
 from lupa import LuaRuntime
 import math
+import dalsp_l2d_addfeatures as l2d
 lua = LuaRuntime(unpack_returned_tuples=True)
 
 
@@ -75,9 +76,9 @@ def get_bg_bgm(options,dress,dress_id,resPath,kanban_folder):
 
 def getfile(options):
     # Setting up data path
-    resPath = os.path.join(options.dataPath, r"res\basic")
-    luatablePath = os.path.join(options.dataPath, r"src\lua\table")
-    bust_kanbanPath = os.path.join(resPath, r"modle\bust_kanban")
+    resPath = os.path.join(options.dataPath, r"res/basic")
+    luatablePath = os.path.join(options.dataPath, r"src/lua/table")
+    bust_kanbanPath = os.path.join(resPath, r"modle/bust_kanban")
 
     # Load required lua
     role = readlua(os.path.join(luatablePath, "Role_en.lua"))
@@ -119,7 +120,7 @@ def getfile(options):
         print("[ERROR] Model for this spirit doesn't exist")
         return
 
-    # Copy extra files
+    # Extras files/processes
     if options.verbose:
         print("[INFO]","Copying extras:")
     for folder in os.listdir(curPath):
@@ -136,6 +137,9 @@ def getfile(options):
         get_sound_files(resPath, model3_file_path, kanban_folder)
         # Copy BGM and BG images
         get_bg_bgm(options,dress,dress_id,resPath,kanban_folder)
+        l2d.edit_model3(kanban_folder,model3_file,luatablePath,dress_id,string_en,dress)
+
+
 
 
 if __name__ == "__main__":
