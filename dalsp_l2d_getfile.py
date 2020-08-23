@@ -30,7 +30,7 @@ def create_spirit_dict(role, string_en, hero):
 def find_id_by_name(keyword, spirit_code_dict):
     for k, v in spirit_code_dict.items():
         if keyword.lower() in v.lower():
-            print("[INFO]","Spirit Name: {:30}ID: {}".format(v, k))
+            print("[INFO]", "Spirit Name: {:30}ID: {}".format(v, k))
             return k, v
     return None, None
 
@@ -55,21 +55,22 @@ def get_sound_files(resPath, model3_file_path, kanban_folder):
             shutil.copy2(os.path.join(resPath, file_dict["Sound"]), path_join_mkdirs(
                 kanban_folder, file_dict["Sound"]))
 
-def get_bg_bgm(options,dress,dress_id,resPath,kanban_folder):
+
+def get_bg_bgm(options, dress, dress_id, resPath, kanban_folder):
     v = dress[dress_id]
     if v is not None:
         if v.background is not "":
             bg_file = os.path.join(resPath, v.background)
             bg_file_base = os.path.basename(bg_file)
             if options.verbose:
-                print("[INFO]","        Copying BG",bg_file_base)
+                print("[INFO]", "        Copying BG", bg_file_base)
             shutil.copy2(bg_file, path_join_mkdirs(
                 kanban_folder, "extra", bg_file_base))
         if v.kanbanBgm is not "":
             bgm_file = os.path.join(resPath, v.kanbanBgm)
             bgm_file_base = os.path.basename(bgm_file)
             if options.verbose:
-                print("[INFO]","        Copying BGM",bgm_file_base)
+                print("[INFO]", "        Copying BGM", bgm_file_base)
             shutil.copy2(bgm_file, path_join_mkdirs(
                 kanban_folder, "extra", bgm_file_base))
 
@@ -101,13 +102,14 @@ def getfile(options):
     # Copy all L2D models from bust_kanban to working path
     modelExist = False
     if options.verbose:
-        print("[INFO]","Copying L2D models to destination:")
+        print("[INFO]", "Copying L2D models to destination:")
     for folder in os.listdir(bust_kanbanPath):
         if kanban_id in folder:
             try:
                 modelExist = True
                 if options.verbose:
-                    print("[INFO]","    Copying",os.path.join(bust_kanbanPath, folder),end=" ... ")
+                    print("[INFO]", "    Copying", os.path.join(
+                        bust_kanbanPath, folder), end=" ... ")
                 shutil.copytree(os.path.join(bust_kanbanPath, folder),
                                 path_join_mkdirs(curPath, folder))
                 if options.verbose:
@@ -122,24 +124,27 @@ def getfile(options):
 
     # Extras files/processes
     if options.verbose:
-        print("[INFO]","Copying extras:")
+        print("[INFO]", "Copying extras:")
     for folder in os.listdir(curPath):
         kanban_folder = os.path.join(curPath, folder)
         pre_dress_id = int(folder.split("_")[1])
         model3_file = "bust_{}_new.model3.json".format(pre_dress_id)
         model3_file_path = os.path.join(kanban_folder, model3_file)
+        if not os.path.exists(model3_file_path):
+            model3_file = "bust_{}.model3.json".format(pre_dress_id)
+            model3_file_path = os.path.join(kanban_folder, model3_file)
         dress_id = pre_dress_id + 4 * \
             (10**(1+math.floor(math.log10(pre_dress_id))))
 
         # Copy sound files
         if options.verbose:
-            print("[INFO]","    Copying sound files for model",os.path.basename(kanban_folder))
+            print("[INFO]", "    Copying sound files for model",
+                  os.path.basename(kanban_folder))
         get_sound_files(resPath, model3_file_path, kanban_folder)
         # Copy BGM and BG images
-        get_bg_bgm(options,dress,dress_id,resPath,kanban_folder)
-        l2d.edit_model3(kanban_folder,model3_file,luatablePath,dress_id,string_en,dress)
-
-
+        get_bg_bgm(options, dress, dress_id, resPath, kanban_folder)
+        l2d.edit_model3(kanban_folder, model3_file,
+                        luatablePath, dress_id, string_en, dress)
 
 
 if __name__ == "__main__":

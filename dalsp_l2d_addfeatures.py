@@ -1,10 +1,11 @@
 import os
 import json
+import re
 from lupa import LuaRuntime
 lua = LuaRuntime(unpack_returned_tuples=True)
 
 
-def add_features(dress_id,interaction,intimacy_dict,dat,string_en):
+def add_features(dress_id, interaction, intimacy_dict, dat, string_en):
     motion_new_dict = {
         "TuiTap": [],
         "HeadTap": [],
@@ -60,7 +61,8 @@ def readlua(luafile):
         dat = f.read()[7:]
         return lua.eval(dat)
 
-def edit_model3(path,filename,luatablePath,dress_id,string_en,dress):
+
+def edit_model3(path, filename, luatablePath, dress_id, string_en, dress):
     dict_add = """{
         "Controllers": {
             "ParamHit": {},
@@ -142,15 +144,17 @@ def edit_model3(path,filename,luatablePath,dress_id,string_en,dress):
     dat.update(dict_add)
     dat.pop("Groups", None)
     delete_keys(dat)
-    add_features(dress_id,interaction,intimacy_dict,dat,string_en)
+    add_features(dress_id, interaction, intimacy_dict, dat, string_en)
     try:
         ss = string_en[dress[dress_id].nameTextId].text
     except:
         ss = "Unnamed"
     fileout = ss+".model3.json"
+    fileout = re.sub(r'[\\/*?:"<>|]', "", fileout)
 
     with open(fileout, "w+") as f:
         f.write(json.dumps(dat, indent=2))
+
 
 if __name__ == "__main__":
     class options:
@@ -161,4 +165,4 @@ if __name__ == "__main__":
     dress = readlua(os.path.join(luatablePath, "Dress.lua"))
     path = r"D:\DAL\Live2D\example\Itsuka Kotori\bust_10511_superKanban"
     filename = 'bust_10511_new.model3.json'
-    edit_model3(path,filename,luatablePath,dress_id,string_en,dress)
+    edit_model3(path, filename, luatablePath, dress_id, string_en, dress)
