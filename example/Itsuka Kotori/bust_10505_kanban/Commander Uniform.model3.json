@@ -1,0 +1,147 @@
+{
+  "Version": 3,
+  "FileReferences": {
+    "Moc": "bust_10505_new.moc3",
+    "Textures": [
+      "bust_10505_new.1024/texture_00.png",
+      "bust_10505_new.1024/texture_01.png",
+      "bust_10505_new.1024/texture_02.png",
+      "bust_10505_new.1024/texture_03.png",
+      "bust_10505_new.1024/texture_04.png"
+    ],
+    "Physics": "bust_10505_new.physics3.json",
+    "Motions": {
+      "Idle": [
+        {
+          "File": "motions/idle.motion3.json"
+        }
+      ],
+      "Id_angry": [
+        {
+          "File": "motions/id_angry.motion3.json"
+        }
+      ],
+      "Id_dress": [
+        {
+          "File": "motions/id_dress.motion3.json"
+        }
+      ],
+      "Id_favor1_1": [
+        {
+          "File": "motions/id_favor1_1.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_02.mp3"
+        }
+      ],
+      "Id_favor1_2": [
+        {
+          "File": "motions/id_favor1_2.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_03.mp3"
+        }
+      ],
+      "Id_favor1_3": [
+        {
+          "File": "motions/id_favor1_3.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_01_A.mp3"
+        }
+      ],
+      "Id_favor2_1": [
+        {
+          "File": "motions/id_favor2_1.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_06.mp3"
+        }
+      ],
+      "Id_favor3_1": [
+        {
+          "File": "motions/id_favor3_1.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_07.mp3"
+        }
+      ],
+      "Id_favor4_1": [
+        {
+          "File": "motions/id_favor4_1.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_11.mp3"
+        }
+      ],
+      "Id_favor5_1": [
+        {
+          "File": "motions/id_favor5_1.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_12.mp3"
+        }
+      ],
+      "Id_happy": [
+        {
+          "File": "motions/id_happy.motion3.json"
+        }
+      ],
+      "TuiTap": [],
+      "HeadTap": [],
+      "BodyTap": []
+    }
+  },
+  "HitAreas": [
+    {
+      "Name": "head",
+      "Id": "HitArea",
+      "Motion": "HeadTap"
+    },
+    {
+      "Name": "body",
+      "Id": "HitArea2",
+      "Motion": "BodyTap"
+    },
+    {
+      "Name": "tui",
+      "Id": "HitArea3",
+      "Motion": "TuiTap"
+    }
+  ],
+  "Controllers": {
+    "ParamHit": {},
+    "ParamLoop": {},
+    "KeyTrigger": {},
+    "EyeBlink": {
+      "MinInterval": 500,
+      "MaxInterval": 6000,
+      "Enabled": true
+    },
+    "LipSync": {
+      "Gain": 5.0,
+      "Items": [
+        {
+          "Id": "PARAM_MOUTH_OPEN_Y",
+          "Min": 0.0,
+          "Max": 1.0,
+          "Input": 0
+        }
+      ],
+      "Enabled": true
+    },
+    "MouseTracking": {
+      "SmoothTime": 0.15,
+      "Enabled": true
+    },
+    "AutoBreath": {
+      "Enabled": true
+    },
+    "ExtraMotion": {
+      "Enabled": true
+    },
+    "Accelerometer": {
+      "Enabled": true
+    },
+    "Microphone": {},
+    "Transform": {},
+    "FaceTracking": {
+      "Enabled": true
+    },
+    "ParamValue": {},
+    "PartOpacity": {},
+    "ArtmeshOpacity": {},
+    "ArtmeshColor": {},
+    "ArtmeshCulling": {
+      "DefaultMode": 0
+    },
+    "IntimacySystem": {}
+  },
+  "Options": {}
+}
