@@ -52,8 +52,12 @@ def get_sound_files(resPath, model3_file_path, kanban_folder):
     for motion in motion_dict:
         file_dict = motion_dict[motion][0]
         if "Sound" in file_dict.keys():
-            shutil.copy2(os.path.join(resPath, file_dict["Sound"]), path_join_mkdirs(
-                kanban_folder, file_dict["Sound"]))
+            try:
+                shutil.copy2(os.path.join(resPath, file_dict["Sound"]), path_join_mkdirs(
+                    kanban_folder, file_dict["Sound"]))
+            except FileNotFoundError:
+                print("[ERROR]", os.path.join(
+                    resPath, file_dict["Sound"]), "doesn't exist")
 
 
 def get_bg_bgm(options, dress, dress_id, resPath, kanban_folder):
