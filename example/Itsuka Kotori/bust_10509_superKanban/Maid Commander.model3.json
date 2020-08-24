@@ -44,7 +44,7 @@
         {
           "File": "motions/id_favor5_1.motion3.json",
           "Sound": "modle/bust/sounds/KOTORI_12.mp3",
-          "Text": "But that kind of thing...{$br}It is not out of the question{$br}No-no way."
+          "Text": "No-no way.{$br}It is not out of the question{$br}But that kind of thing..."
         }
       ],
       "BodyTap": [

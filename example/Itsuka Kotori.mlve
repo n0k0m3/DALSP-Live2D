@@ -1,0 +1,47 @@
+{
+  "name": "Itsuka Kotori",
+  "version": "1",
+  "list": [
+    {
+      "character": "Itsuka Kotori",
+      "costume": [
+        {
+          "name": "Formal Apparel for Junior High.model3",
+          "path": "D:\\DAL\\DALSP-Live2D\\example\\Itsuka Kotori\\bust_10504_kanban\\Formal Apparel for Junior High.model3.json"
+        },
+        {
+          "name": "Commander Uniform.model3",
+          "path": "D:\\DAL\\DALSP-Live2D\\example\\Itsuka Kotori\\bust_10505_kanban\\Commander Uniform.model3.json"
+        },
+        {
+          "name": "Crimson Spirit.model3",
+          "path": "D:\\DAL\\DALSP-Live2D\\example\\Itsuka Kotori\\bust_10506_kanban\\Crimson Spirit.model3.json"
+        },
+        {
+          "name": "Commander's Snooze.model3",
+          "path": "D:\\DAL\\DALSP-Live2D\\example\\Itsuka Kotori\\bust_10507_superKanban\\Commander's Snooze.model3.json"
+        },
+        {
+          "name": "Exclusive Maid.model3",
+          "path": "D:\\DAL\\DALSP-Live2D\\example\\Itsuka Kotori\\bust_10508_kanban\\Exclusive Maid.model3.json"
+        },
+        {
+          "name": "Maid Commander.model3",
+          "path": "D:\\DAL\\DALSP-Live2D\\example\\Itsuka Kotori\\bust_10509_superKanban\\Maid Commander.model3.json"
+        },
+        {
+          "name": "White Bunny.model3",
+          "path": "D:\\DAL\\DALSP-Live2D\\example\\Itsuka Kotori\\bust_10510_kanban\\White Bunny.model3.json"
+        },
+        {
+          "name": "Moon and Flower.model3",
+          "path": "D:\\DAL\\DALSP-Live2D\\example\\Itsuka Kotori\\bust_10511_superKanban\\Moon and Flower.model3.json"
+        },
+        {
+          "name": "Unnamed.model3",
+          "path": "D:\\DAL\\DALSP-Live2D\\example\\Itsuka Kotori\\bust_10512_kanban\\Unnamed.model3.json"
+        }
+      ]
+    }
+  ]
+}

@@ -19,41 +19,41 @@
         {
           "File": "motions/id_favor1_3.motion3.json",
           "Sound": "modle/bust/sounds/KOTORI_01_A_a.mp3",
-          "Text": "You can't repress your animal side anymore?{$br}Stupid brother...{$br}Zzzz\u2026"
+          "Text": "Zzzz\u2026{$br}Stupid brother...{$br}You can't repress your animal side anymore?"
         },
         {
           "File": "motions/id_favor4_1.motion3.json",
           "Sound": "modle/bust/sounds/KOTORI_11_a.mp3",
-          "Text": "What am I going to do with you?{$br}*Sigh*... You're gonna be spoiled,{$br}\u2026"
+          "Text": "\u2026{$br}*Sigh*... You're gonna be spoiled,{$br}What am I going to do with you?"
         }
       ],
       "HeadTap": [
         {
           "File": "motions/id_favor1_1.motion3.json",
           "Sound": "modle/bust/sounds/KOTORI_06_a.mp3",
-          "Text": "I'm not a kid anymore!{$br}Don't - Don't do this!{$br}Zzzz\u2026"
+          "Text": "Zzzz\u2026{$br}Don't - Don't do this!{$br}I'm not a kid anymore!"
         },
         {
           "File": "motions/id_favor3_1.motion3.json",
           "Sound": "modle/bust/sounds/KOTORI_16_a.mp3",
-          "Text": "It is not because I feel lonely.{$br}... Hey... just talk to me for a while...{$br}\u2026"
+          "Text": "\u2026{$br}... Hey... just talk to me for a while...{$br}It is not because I feel lonely."
         }
       ],
       "BodyTap": [
         {
           "File": "motions/id_favor1_2.motion3.json",
           "Sound": "modle/bust/sounds/KOTORI_03_a.mp3",
-          "Text": "You are not a monkey in heat.{$br}Stop the noise{$br}\u2026"
+          "Text": "\u2026{$br}Stop the noise{$br}You are not a monkey in heat."
         },
         {
           "File": "motions/id_favor2_1.motion3.json",
           "Sound": "modle/bust/sounds/KOTORI_88_a.mp3",
-          "Text": "Emm, I will finish soon. Please go to bed.{$br}*Yawn*... it is already this late?{$br}Zzzz\u2026"
+          "Text": "Zzzz\u2026{$br}*Yawn*... it is already this late?{$br}Emm, I will finish soon. Please go to bed."
         },
         {
           "File": "motions/id_favor5_1.motion3.json",
           "Sound": "modle/bust/sounds/KOTORI_12_a.mp3",
-          "Text": "Go on the date with other Spirits{$br}Don't mind me.{$br}\u2026"
+          "Text": "\u2026{$br}Don't mind me.{$br}Go on the date with other Spirits"
         }
       ]
     }

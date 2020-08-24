@@ -28,56 +28,52 @@
           "File": "motions/id_dress.motion3.json"
         }
       ],
-      "Id_favor1_1": [
-        {
-          "File": "motions/id_favor1_1.motion3.json",
-          "Sound": "modle/bust/sounds/KOTORI_322.mp3"
-        }
-      ],
-      "Id_favor1_2": [
-        {
-          "File": "motions/id_favor1_2.motion3.json",
-          "Sound": "modle/bust/sounds/KOTORI_323.mp3"
-        }
-      ],
-      "Id_favor1_3": [
-        {
-          "File": "motions/id_favor1_3.motion3.json",
-          "Sound": "modle/bust/sounds/KOTORI_324.mp3"
-        }
-      ],
-      "Id_favor2_1": [
-        {
-          "File": "motions/id_favor2_1.motion3.json",
-          "Sound": "modle/bust/sounds/KOTORI_325.mp3"
-        }
-      ],
-      "Id_favor3_1": [
-        {
-          "File": "motions/id_favor3_1.motion3.json",
-          "Sound": "modle/bust/sounds/KOTORI_326.mp3"
-        }
-      ],
-      "Id_favor4_1": [
-        {
-          "File": "motions/id_favor4_1.motion3.json",
-          "Sound": "modle/bust/sounds/KOTORI_327.mp3"
-        }
-      ],
-      "Id_favor5_1": [
-        {
-          "File": "motions/id_favor5_1.motion3.json",
-          "Sound": "modle/bust/sounds/KOTORI_328.mp3"
-        }
-      ],
       "Id_happy": [
         {
           "File": "motions/id_happy.motion3.json"
         }
       ],
-      "TuiTap": [],
-      "HeadTap": [],
-      "BodyTap": []
+      "TuiTap": [
+        {
+          "File": "motions/id_favor1_3.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_324.mp3",
+          "Text": "Looks like you want to be among stars in the sky."
+        },
+        {
+          "File": "motions/id_favor4_1.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_327.mp3",
+          "Text": "Oh? That's your Christmas wish?"
+        }
+      ],
+      "HeadTap": [
+        {
+          "File": "motions/id_favor1_1.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_322.mp3",
+          "Text": "Humph, so you want to play reindeer?"
+        },
+        {
+          "File": "motions/id_favor2_1.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_325.mp3",
+          "Text": "Well... the Christmas special is quite nice."
+        },
+        {
+          "File": "motions/id_favor5_1.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_328.mp3",
+          "Text": "Wait... I know it's Christmas...{$br}but I am not ready for this..."
+        }
+      ],
+      "BodyTap": [
+        {
+          "File": "motions/id_favor1_2.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_323.mp3",
+          "Text": "How about hanging you on the Christmas tree?"
+        },
+        {
+          "File": "motions/id_favor3_1.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_326.mp3",
+          "Text": "What are you doing?... It tickles..."
+        }
+      ]
     }
   },
   "HitAreas": [

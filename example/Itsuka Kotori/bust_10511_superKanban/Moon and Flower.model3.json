@@ -25,7 +25,7 @@
         {
           "File": "motions/id_favor1_3.motion3.json",
           "Sound": "modle/bust/sounds/KOTORI_383.mp3",
-          "Text": "Please, Big Brother~{$br}and then the family restaurant at noon!{$br}Go to the amusement park"
+          "Text": "Go to the amusement park{$br}and then the family restaurant at noon!{$br}Please, Big Brother~"
         },
         {
           "File": "motions/id_favor4_1.motion3.json",

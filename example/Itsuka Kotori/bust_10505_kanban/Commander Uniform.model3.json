@@ -26,56 +26,52 @@
           "File": "motions/id_dress.motion3.json"
         }
       ],
-      "Id_favor1_1": [
-        {
-          "File": "motions/id_favor1_1.motion3.json",
-          "Sound": "modle/bust/sounds/KOTORI_02.mp3"
-        }
-      ],
-      "Id_favor1_2": [
-        {
-          "File": "motions/id_favor1_2.motion3.json",
-          "Sound": "modle/bust/sounds/KOTORI_03.mp3"
-        }
-      ],
-      "Id_favor1_3": [
-        {
-          "File": "motions/id_favor1_3.motion3.json",
-          "Sound": "modle/bust/sounds/KOTORI_01_A.mp3"
-        }
-      ],
-      "Id_favor2_1": [
-        {
-          "File": "motions/id_favor2_1.motion3.json",
-          "Sound": "modle/bust/sounds/KOTORI_06.mp3"
-        }
-      ],
-      "Id_favor3_1": [
-        {
-          "File": "motions/id_favor3_1.motion3.json",
-          "Sound": "modle/bust/sounds/KOTORI_07.mp3"
-        }
-      ],
-      "Id_favor4_1": [
-        {
-          "File": "motions/id_favor4_1.motion3.json",
-          "Sound": "modle/bust/sounds/KOTORI_11.mp3"
-        }
-      ],
-      "Id_favor5_1": [
-        {
-          "File": "motions/id_favor5_1.motion3.json",
-          "Sound": "modle/bust/sounds/KOTORI_12.mp3"
-        }
-      ],
       "Id_happy": [
         {
           "File": "motions/id_happy.motion3.json"
         }
       ],
-      "TuiTap": [],
-      "HeadTap": [],
-      "BodyTap": []
+      "TuiTap": [
+        {
+          "File": "motions/id_favor1_3.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_01_A.mp3",
+          "Text": "Stupid brother...{$br}You can't repress your animal side anymore?"
+        },
+        {
+          "File": "motions/id_favor4_1.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_11.mp3",
+          "Text": "*Sigh*\u2026 You're gonna be spoiled{$br}What am I going to do with you?"
+        }
+      ],
+      "HeadTap": [
+        {
+          "File": "motions/id_favor1_1.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_02.mp3",
+          "Text": "Shut-shut up...{$br}Height is not that important."
+        },
+        {
+          "File": "motions/id_favor2_1.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_06.mp3",
+          "Text": "Don't - Don't do this!{$br}I'm not a kid anymore!"
+        },
+        {
+          "File": "motions/id_favor5_1.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_12.mp3",
+          "Text": "No-no way.{$br}It is not out of the question{$br}But that kind of thing..."
+        }
+      ],
+      "BodyTap": [
+        {
+          "File": "motions/id_favor1_2.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_03.mp3",
+          "Text": "Stop the noise{$br}You are not a monkey in heat."
+        },
+        {
+          "File": "motions/id_favor3_1.motion3.json",
+          "Sound": "modle/bust/sounds/KOTORI_07.mp3",
+          "Text": "Don't mind me.{$br}Go on the date with other Spirits"
+        }
+      ]
     }
   },
   "HitAreas": [

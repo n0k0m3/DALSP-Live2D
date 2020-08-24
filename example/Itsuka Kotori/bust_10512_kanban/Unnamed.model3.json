@@ -74,10 +74,7 @@
         {
           "File": "motions/id_happy.motion3.json"
         }
-      ],
-      "TuiTap": [],
-      "HeadTap": [],
-      "BodyTap": []
+      ]
     }
   },
   "HitAreas": [
