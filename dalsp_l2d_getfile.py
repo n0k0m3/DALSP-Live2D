@@ -109,19 +109,19 @@ def getfile(options):
         print("[INFO]", "Copying L2D models to destination:")
     for folder in os.listdir(bust_kanbanPath):
         if kanban_id in folder:
+            modelExist = True
+            if options.verbose:
+                print("[INFO]", "    Copying", os.path.join(
+                    bust_kanbanPath, folder), end=" ... ")
             try:
-                modelExist = True
-                if options.verbose:
-                    print("[INFO]", "    Copying", os.path.join(
-                        bust_kanbanPath, folder), end=" ... ")
                 shutil.copytree(os.path.join(bust_kanbanPath, folder),
                                 path_join_mkdirs(curPath, folder))
-                if options.verbose:
-                    print("Done")
             except FileExistsError:
-                if options.verbose:
-                    print("Already exists")
-                pass
+                shutil.rmtree(os.path.join(curPath, folder))
+                shutil.copytree(os.path.join(bust_kanbanPath, folder),
+                                path_join_mkdirs(curPath, folder))
+            if options.verbose:
+                print("Done")
     if modelExist is not True:
         print("[ERROR] Model for this spirit doesn't exist")
         return
@@ -129,11 +129,11 @@ def getfile(options):
     # Extras files/processes
     # MLVE file
     mlve_json = {
-        "name":folder_name,
+        "name": folder_name,
         "version": "1",
-        "list":[
+        "list": [
             {
-                "character":folder_name,
+                "character": folder_name,
                 "costume": []
             }
         ]
@@ -162,13 +162,13 @@ def getfile(options):
         fileout = l2d_add.edit_model3(kanban_folder, model3_file,
                                       luatablePath, dress_id, string_en, dress)
         mlve_add = {
-            "name" : os.path.splitext(os.path.basename(fileout))[0],
-            "path" : os.path.join(kanban_folder,fileout)
+            "name": os.path.splitext(os.path.basename(fileout))[0],
+            "path": os.path.join(kanban_folder, fileout)
         }
         mlve_json["list"][0]["costume"].append(mlve_add)
     os.chdir(options.wkPath)
-    with open(folder_name+".mlve","w+") as f:
-        f.write(json.dumps(mlve_json,indent=2))
+    with open(folder_name+".mlve", "w+") as f:
+        f.write(json.dumps(mlve_json, indent=2))
 
 
 if __name__ == "__main__":
