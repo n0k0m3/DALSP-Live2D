@@ -27,10 +27,10 @@ def add_features(dress_id, interaction, intimacy_dict, dat, string_en):
 
             # add subtitles
             v = dat["FileReferences"]["Motions"][motion_name]
-            s = []
-            for value in inter.lineShow.values():
-                s.append(string_en[value].text)
-            s = "{$br}".join(s[::-1])
+            s = {}
+            for k,value in inter.lineShow.items():
+                s[k]=string_en[value].text
+            s = "{$br}".join([s[x] for x in sorted(s)])
             v[0]["Text"] = s
 
             # # add intimacy
