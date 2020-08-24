@@ -63,14 +63,14 @@ def get_sound_files(resPath, model3_file_path, kanban_folder):
 def get_bg_bgm(options, dress, dress_id, resPath, kanban_folder):
     v = dress[dress_id]
     if v is not None:
-        if v.background is not "":
+        if v.background != "":
             bg_file = os.path.join(resPath, v.background)
             bg_file_base = os.path.basename(bg_file)
             if options.verbose:
                 print("[INFO]", "        Copying BG", bg_file_base)
             shutil.copy2(bg_file, path_join_mkdirs(
                 kanban_folder, "extra", bg_file_base))
-        if v.kanbanBgm is not "":
+        if v.kanbanBgm != "":
             bgm_file = os.path.join(resPath, v.kanbanBgm)
             bgm_file_base = os.path.basename(bgm_file)
             if options.verbose:
