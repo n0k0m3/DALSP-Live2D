@@ -21,7 +21,7 @@ def add_features(dress_id, interaction, intimacy_dict, dat, string_en):
     motion_set = set()
 
     for k, inter in interaction.items():
-        if inter.modelId == dress_id+100000:
+        if inter.modelId%100000 == dress_id%100000:
             motion_name = inter.action1
             motion_set.add(motion_name)
 
@@ -43,6 +43,8 @@ def add_features(dress_id, interaction, intimacy_dict, dat, string_en):
     # rearrange to tapping position
             if v[0] not in motion_new_dict[tap_map[inter.position]]:
                 motion_new_dict[tap_map[inter.position]].append(v[0])
+    if len(motion_set) == 0:
+        return
     dat["FileReferences"]["Motions"].update(motion_new_dict)
     d = dat["FileReferences"]["Motions"]
     for motion_name in motion_set:
@@ -154,6 +156,7 @@ def edit_model3(path, filename, luatablePath, dress_id, string_en, dress):
 
     with open(fileout, "w+") as f:
         f.write(json.dumps(dat, indent=2))
+    return fileout
 
 
 if __name__ == "__main__":
