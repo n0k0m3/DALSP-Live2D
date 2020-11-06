@@ -1,5 +1,6 @@
 Live2D_output
 .vscode
+.idea
 __pycache__
 draft.py
 debug.log
