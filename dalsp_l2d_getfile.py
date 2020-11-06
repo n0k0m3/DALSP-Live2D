@@ -44,13 +44,13 @@ class DALSP_L2D:
             dat = f.read()[7:]
             return lua.eval(dat)
 
-    def create_spirit_dict(self, role, string_en, hero):
+    def create_spirit_dict(self):
         spirit_code_dict = {}
-        for k in sorted(role):
-            v = role[k]
+        for k in sorted(self.role):
+            v = self.role[k]
             if v.heroId == 0:
                 continue
-            name = string_en[int(hero[v.heroId].nameTextId)].text
+            name = self.string_en[int(self.hero[v.heroId].nameTextId)].text
             if len(name.split()) == 2:
                 name = " ".join(name.split()[::-1])
             spirit_code_dict[k] = name
@@ -59,7 +59,7 @@ class DALSP_L2D:
     def find_id_by_name(self, keyword, spirit_code_dict):
         for k, v in spirit_code_dict.items():
             if keyword.lower() in v.lower():
-                print("[INFO]", "Spirit Name: {:30}ID: {}".format(v, k))
+                self.logger.info("Spirit Name: {:30}ID: {}".format(v, k))
                 return k, v
         return None, None
 
@@ -72,58 +72,39 @@ class DALSP_L2D:
             os.makedirs(folder)
         return path
 
-    def get_sound_files(self, resPath, model3_file_path, kanban_folder):
-        with open(model3_file_path, "r+") as f:
+    def get_sound_files(self):
+        with open(self.model3_file_path, "r+") as f:
             data = json.load(f)
         motion_dict = data["FileReferences"]["Motions"]
         for motion in motion_dict:
             file_dict = motion_dict[motion][0]
             if "Sound" in file_dict.keys():
                 try:
-                    shutil.copy2(os.path.join(resPath, file_dict["Sound"]), self.path_join_mkdirs(
-                        kanban_folder, file_dict["Sound"]))
+                    shutil.copy2(os.path.join(self.resPath, file_dict["Sound"]), self.path_join_mkdirs(
+                        self.kanban_folder, file_dict["Sound"]))
                 except FileNotFoundError:
-                    print("[ERROR]", os.path.join(
-                        resPath, file_dict["Sound"]), "doesn't exist")
+                    self.logger.error(os.path.join(
+                        self.resPath, file_dict["Sound"])+" doesn't exist")
 
-    def get_bg_bgm(self, dress, dress_id, resPath, kanban_folder):
-        v = dress[dress_id]
+    def get_bg_bgm(self):
+        v = self.dress[self.dress_id]
         if v is not None:
             if v.background != "":
-                bg_file = os.path.join(resPath, v.background)
+                bg_file = os.path.join(self.resPath, v.background)
                 bg_file_base = os.path.basename(bg_file)
                 if self.verbose:
                     self.logger.info("        Copying BG " + bg_file_base)
                 shutil.copy2(bg_file, self.path_join_mkdirs(
-                    kanban_folder, "extra", bg_file_base))
+                    self.kanban_folder, "extra", bg_file_base))
             if v.kanbanBgm != "":
-                bgm_file = os.path.join(resPath, v.kanbanBgm)
+                bgm_file = os.path.join(self.resPath, v.kanbanBgm)
                 bgm_file_base = os.path.basename(bgm_file)
                 if self.verbose:
                     self.logger.info("        Copying BGM " + bgm_file_base)
                 shutil.copy2(bgm_file, self.path_join_mkdirs(
-                    kanban_folder, "extra", bgm_file_base))
+                    self.kanban_folder, "extra", bgm_file_base))
 
-    def getfile(self):
-        # Setting up data path
-        resPath = os.path.join(self.dataPath, r"res/basic")
-        luatablePath = os.path.join(self.dataPath, r"src/lua/table")
-        bust_kanbanPath = os.path.join(resPath, r"modle/bust_kanban")
-
-        # Load required lua
-        role = self.readlua(os.path.join(luatablePath, "Role_en.lua"))
-        string_en = self.readlua(os.path.join(luatablePath, "String_en.lua"))
-        hero = self.readlua(os.path.join(luatablePath, "Hero.lua"))
-        dress = self.readlua(os.path.join(luatablePath, "Dress.lua"))
-
-        # Find spirit name and create folder
-        spirit_code_dict = self.create_spirit_dict(role, string_en, hero)
-        if self.list:
-            for k, v in spirit_code_dict.items():
-                print(k, v)
-            return
-        spirit_id, folder_name = self.find_id_by_name(
-            self.spirit_need, spirit_code_dict)
+    def copy(self,spirit_id, folder_name):
         if spirit_id is None:
             self.logger.error("Spirit doesn't exist in the database")
             return
@@ -135,19 +116,19 @@ class DALSP_L2D:
         # Copy all L2D models from bust_kanban to working path
         modelExist = False
         if self.verbose:
-            self.logger.info("Copying L2D models to destination:")
-        for folder in os.listdir(bust_kanbanPath):
+            self.logger.info("Copying L2D models for {} to destination:".format(folder_name))
+        for folder in os.listdir(self.bust_kanbanPath):
             if kanban_id in folder:
                 modelExist = True
                 if self.verbose:
                     self.logger.info("    Copying "+os.path.join(
-                        bust_kanbanPath, folder))
+                        self.bust_kanbanPath, folder))
                 try:
-                    shutil.copytree(os.path.join(bust_kanbanPath, folder),
+                    shutil.copytree(os.path.join(self.bust_kanbanPath, folder),
                                     self.path_join_mkdirs(curPath, folder))
                 except FileExistsError:
                     shutil.rmtree(os.path.join(curPath, folder))
-                    shutil.copytree(os.path.join(bust_kanbanPath, folder),
+                    shutil.copytree(os.path.join(self.bust_kanbanPath, folder),
                                     self.path_join_mkdirs(curPath, folder))
         if modelExist is not True:
             self.logger.error("Model for this spirit doesn't exist")
@@ -167,37 +148,68 @@ class DALSP_L2D:
         }
         # Other files
         if self.verbose:
-            self.logger.info("Copying extras:")
+            self.logger.info("  Copying extras:")
         for folder in os.listdir(curPath):
-            kanban_folder = os.path.join(curPath, folder)
-            pre_dress_id = int(folder.split("_")[1])
-            model3_file = "bust_{}_new.model3.json".format(pre_dress_id)
-            model3_file_path = os.path.join(kanban_folder, model3_file)
-            # if not os.path.exists(model3_file_path):
-            #     model3_file = "bust_{}.model3.json".format(pre_dress_id)
-            #     model3_file_path = os.path.join(kanban_folder, model3_file)
-            dress_id = pre_dress_id + 4 * \
-                       (10 ** (1 + math.floor(math.log10(pre_dress_id))))
+            self.kanban_folder = os.path.join(curPath, folder)
+            self.pre_dress_id = int(folder.split("_")[1])
+            self.model3_file = "bust_{}_new.model3.json".format(self.pre_dress_id)
+            self.model3_file_path = os.path.join(self.kanban_folder, self.model3_file)
+            if not os.path.exists(self.model3_file_path):
+                self.model3_file = "bust_{}.model3.json".format(self.pre_dress_id)
+                self.model3_file_path = os.path.join(self.kanban_folder, self.model3_file)
+            self.dress_id = self.pre_dress_id + 4 * \
+                       (10 ** (1 + math.floor(math.log10(self.pre_dress_id))))
 
             # Copy sound files
             if self.verbose:
                 self.logger.info("    Copying sound files for model "+
-                      os.path.basename(kanban_folder))
-            self.get_sound_files(resPath, model3_file_path, kanban_folder)
+                      os.path.basename(self.kanban_folder))
+            self.get_sound_files()
             # Copy BGM and BG images
-            self.get_bg_bgm(dress, dress_id, resPath, kanban_folder)
-            fileout = l2d_add.edit_model3(kanban_folder, model3_file,
-                                          luatablePath, dress_id, string_en, dress)
+            self.get_bg_bgm()
+            fileout = l2d_add.edit_model3(self.kanban_folder, self.model3_file,
+                                          self.luatablePath, self.dress_id, self.string_en, self.dress)
             mlve_add = {
                 "name": os.path.splitext(os.path.basename(fileout))[0],
-                "path": os.path.join(kanban_folder, fileout)
+                "path": os.path.join(self.kanban_folder, fileout)
             }
             mlve_json["list"][0]["costume"].append(mlve_add)
         os.chdir(self.wkPath)
         with open(folder_name + ".mlve", "w+") as f:
             f.write(json.dumps(mlve_json, indent=2))
         if self.verbose:
-            self.logger.info("Done!")
+            self.logger.info("Done copying {}".format(folder_name))
+
+
+
+    def getfile(self):
+        # Setting up data path
+        self.resPath = os.path.join(self.dataPath, r"res/basic")
+        self.luatablePath = os.path.join(self.dataPath, r"src/lua/table")
+        self.bust_kanbanPath = os.path.join(self.resPath, r"modle/bust_kanban")
+
+        # Load required lua
+        self.role = self.readlua(os.path.join(self.luatablePath, "Role_en.lua"))
+        self.string_en = self.readlua(os.path.join(self.luatablePath, "String_en.lua"))
+        self.hero = self.readlua(os.path.join(self.luatablePath, "Hero.lua"))
+        self.dress = self.readlua(os.path.join(self.luatablePath, "Dress.lua"))
+
+        # Find spirit name and create folder
+        self.spirit_code_dict = self.create_spirit_dict()
+        if self.list:
+            print("Available Spirits")
+            print("{:5}{}".format("ID","Spirit Name"))
+            for k, v in self.spirit_code_dict.items():
+                print("{:5}{}".format(str(k), v))
+            return
+
+        if self.spirit_need != "all":
+            spirit_id, folder_name = self.find_id_by_name(
+                self.spirit_need, self.spirit_code_dict)
+            self.copy(spirit_id, folder_name)
+        else:
+            for spirit_id, folder_name in self.spirit_code_dict.items():
+                self.copy(spirit_id, folder_name)
 
 
 if __name__ == "__main__":
