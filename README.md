@@ -14,19 +14,18 @@ Generate L2D model for Live2DViewerEX
 
 Date A Live: Spirit Pledge Live2D
 
+usage: main.py [-h] [-v] INPUT OUTPUT SPIRIT_NAME
+
 Selectively copy folder structure for Live2D model to destination
 
-Usage: main.py [options]
+positional arguments:
+  INPUT          Data Source (contains res, src, TFFramework folder)
+  OUTPUT         Output Directory, Live2D Assets will be copied here
+  SPIRIT_NAME    Decrypted Data Destination (MUST BE A FOLDER)
 
-Options:
-  -h, --help            show this help message and exit
-  -d "DATA_FOLDER", --data="DATA_FOLDER"
-                        Data Source (contains res, src, TFFramework folder)
-  -o "OUTPUT", --output="OUTPUT"
-                        Output Directory, Live2D Assets will be copied here
-  -n "SPIRIT_NAME", --name="SPIRIT_NAME"
-                        Decrypted Data Destination (MUST BE A FOLDER)
-  -v, --verbose         Print debug messages to stdout
+optional arguments:
+  -h, --help     show this help message and exit
+  -v, --verbose  Print debug messages to stdout
 ```
 
 ## Example
@@ -36,7 +35,7 @@ Export folder `D:\DAL\Live2D`
 Spirit L2D needed `Kotori`
 
 ```
-> python main.py -d D:\DAL\DateALiveData -o D:\DAL\Live2D -n kotori
+> python main.py D:\DAL\DateALiveData D:\DAL\Live2D kotori
 
 Date A Live: Spirit Pledge Live2D
 
