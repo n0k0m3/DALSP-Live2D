@@ -1,7 +1,9 @@
-import os
 import json
+import os
 import re
+
 from lupa import LuaRuntime
+
 lua = LuaRuntime(unpack_returned_tuples=True)
 
 
@@ -21,15 +23,15 @@ def add_features(dress_id, interaction, intimacy_dict, dat, string_en):
     motion_set = set()
 
     for k, inter in interaction.items():
-        if inter.modelId%100000 == dress_id%100000:
+        if inter.modelId % 100000 == dress_id % 100000:
             motion_name = inter.action1
             motion_set.add(motion_name)
 
             # add subtitles
             v = dat["FileReferences"]["Motions"][motion_name]
             s = {}
-            for k,value in inter.lineShow.items():
-                s[k]=string_en[value].text
+            for k, value in inter.lineShow.items():
+                s[k] = string_en[value].text
             s = "{$br}".join([s[x] for x in sorted(s)])
             v[0]["Text"] = s
 
@@ -40,7 +42,7 @@ def add_features(dress_id, interaction, intimacy_dict, dat, string_en):
             # else:
             #     v[0]["Intimacy"]["Min"] = min(v[0]["Intimacy"]["Min"],intimacy_dict[inter.favor])
 
-    # rearrange to tapping position
+            # rearrange to tapping position
             if v[0] not in motion_new_dict[tap_map[inter.position]]:
                 motion_new_dict[tap_map[inter.position]].append(v[0])
     if len(motion_set) == 0:
@@ -151,7 +153,7 @@ def edit_model3(path, filename, luatablePath, dress_id, string_en, dress):
         ss = string_en[dress[dress_id].nameTextId].text
     except:
         ss = "Unnamed"
-    fileout = ss+".model3.json"
+    fileout = ss + ".model3.json"
     fileout = re.sub(r'[\\/*?:"<>|]', "", fileout)
 
     with open(fileout, "w+") as f:
@@ -162,6 +164,8 @@ def edit_model3(path, filename, luatablePath, dress_id, string_en, dress):
 if __name__ == "__main__":
     class options:
         dataPath = r"D:\DAL\DateALiveData"
+
+
     dress_id = 410511
     luatablePath = os.path.join(options.dataPath, r"src/lua/table")
     string_en = readlua(os.path.join(luatablePath, "String_en.lua"))
