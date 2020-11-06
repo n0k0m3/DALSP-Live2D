@@ -18,6 +18,7 @@ class DALSP_L2D:
         self.wkPath = os.path.abspath(options.wkPath)
         self.list = options.list
         self.spirit_need = options.spirit_need
+        self.region = options.region
         self.verbose = options.verbose
         if self.verbose:
             # logger to debug.log
@@ -50,7 +51,7 @@ class DALSP_L2D:
             v = self.role[k]
             if v.heroId == 0:
                 continue
-            name = self.string_en[int(self.hero[v.heroId].nameTextId)].text
+            name = self.string[int(self.hero[v.heroId].nameTextId)].text
             if len(name.split()) == 2:
                 name = " ".join(name.split()[::-1])
             spirit_code_dict[k] = name
@@ -59,7 +60,8 @@ class DALSP_L2D:
     def find_id_by_name(self, keyword, spirit_code_dict):
         for k, v in spirit_code_dict.items():
             if keyword.lower() in v.lower():
-                self.logger.info("Spirit Name: {:30}ID: {}".format(v, k))
+                if self.verbose:
+                    self.logger.info("Spirit Name: {:30}ID: {}".format(v, k))
                 return k, v
         return None, None
 
@@ -168,7 +170,7 @@ class DALSP_L2D:
             # Copy BGM and BG images
             self.get_bg_bgm()
             fileout = l2d_add.edit_model3(self.kanban_folder, self.model3_file,
-                                          self.luatablePath, self.dress_id, self.string_en, self.dress)
+                                          self.luatablePath, self.dress_id, self.string, self.dress)
             mlve_add = {
                 "name": os.path.splitext(os.path.basename(fileout))[0],
                 "path": os.path.join(self.kanban_folder, fileout)
@@ -189,8 +191,13 @@ class DALSP_L2D:
         self.bust_kanbanPath = os.path.join(self.resPath, r"modle/bust_kanban")
 
         # Load required lua
-        self.role = self.readlua(os.path.join(self.luatablePath, "Role_en.lua"))
-        self.string_en = self.readlua(os.path.join(self.luatablePath, "String_en.lua"))
+        rolefile = "Role.lua"
+        stringfile = "String.lua"
+        if self.region == "EN":
+            rolefile = "Role_en.lua"
+            stringfile = "String_en.lua"
+        self.role = self.readlua(os.path.join(self.luatablePath, rolefile))
+        self.string = self.readlua(os.path.join(self.luatablePath, stringfile))
         self.hero = self.readlua(os.path.join(self.luatablePath, "Hero.lua"))
         self.dress = self.readlua(os.path.join(self.luatablePath, "Dress.lua"))
 

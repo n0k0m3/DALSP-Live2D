@@ -19,7 +19,7 @@ def main():
     parser.add_argument("-n", "--name", dest="spirit_need", default="all",
                         help="Specify Spirit Name to generate L2D, default: all", metavar="SPIRIT_NAME")
     parser.add_argument("-r", "--region", dest="region", default="EN",
-                        help="Specify the region of the data (EN/CN), default: EN", metavar="SPIRIT_NAME", choices=["EN","CN"])
+                        help="Specify the region of the data (EN/CN), default: EN", metavar="REGION", choices=["EN","CN"])
     parser.add_argument("-v", "--verbose",
                         action="store_true", dest="verbose", default=False,
                         help="Print debug messages to stdout")
