@@ -31,7 +31,11 @@ def add_features(dress_id, interaction, intimacy_dict, dat, string_en):
             v = dat["FileReferences"]["Motions"][motion_name]
             s = {}
             for k, value in inter.lineShow.items():
-                s[k] = string_en[value].text
+                try:
+                    s[k] = string_en[value].text
+                except AttributeError:
+                    print("Error adding subtitle",value)
+                    continue
             s = "{$br}".join([s[x] for x in sorted(s)])
             v[0]["Text"] = s
 

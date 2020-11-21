@@ -51,7 +51,10 @@ class DALSP_L2D:
             v = self.role[k]
             if v.heroId == 0:
                 continue
-            name = self.string[int(self.hero[v.heroId].nameTextId)].text
+            try:
+                name = self.string[int(self.hero[v.heroId].nameTextId)].text
+            except AttributeError:
+                continue
             if len(name.split()) == 2:
                 name = " ".join(name.split()[::-1])
             spirit_code_dict[k] = name
@@ -106,7 +109,7 @@ class DALSP_L2D:
                 shutil.copy2(bgm_file, self.path_join_mkdirs(
                     self.kanban_folder, "extra", bgm_file_base))
 
-    def copy(self,spirit_id, folder_name):
+    def copy(self, spirit_id, folder_name):
         if spirit_id is None:
             self.logger.error("Spirit doesn't exist in the database")
             return
@@ -118,7 +121,8 @@ class DALSP_L2D:
         # Copy all L2D models from bust_kanban to working path
         modelExist = False
         if self.verbose:
-            self.logger.info("Copying L2D models for {} to destination:".format(folder_name))
+            self.logger.info(
+                "Copying L2D models for {} to destination:".format(folder_name))
         for folder in os.listdir(self.bust_kanbanPath):
             if kanban_id in folder:
                 modelExist = True
@@ -154,18 +158,22 @@ class DALSP_L2D:
         for folder in os.listdir(curPath):
             self.kanban_folder = os.path.join(curPath, folder)
             self.pre_dress_id = int(folder.split("_")[1])
-            self.model3_file = "bust_{}_new.model3.json".format(self.pre_dress_id)
-            self.model3_file_path = os.path.join(self.kanban_folder, self.model3_file)
+            self.model3_file = "bust_{}_new.model3.json".format(
+                self.pre_dress_id)
+            self.model3_file_path = os.path.join(
+                self.kanban_folder, self.model3_file)
             if not os.path.exists(self.model3_file_path):
-                self.model3_file = "bust_{}.model3.json".format(self.pre_dress_id)
-                self.model3_file_path = os.path.join(self.kanban_folder, self.model3_file)
+                self.model3_file = "bust_{}.model3.json".format(
+                    self.pre_dress_id)
+                self.model3_file_path = os.path.join(
+                    self.kanban_folder, self.model3_file)
             self.dress_id = self.pre_dress_id + 4 * \
-                       (10 ** (1 + math.floor(math.log10(self.pre_dress_id))))
+                (10 ** (1 + math.floor(math.log10(self.pre_dress_id))))
 
             # Copy sound files
             if self.verbose:
-                self.logger.info("    Copying sound files for model "+
-                      os.path.basename(self.kanban_folder))
+                self.logger.info("    Copying sound files for model " +
+                                 os.path.basename(self.kanban_folder))
             self.get_sound_files()
             # Copy BGM and BG images
             self.get_bg_bgm()
@@ -181,8 +189,6 @@ class DALSP_L2D:
             f.write(json.dumps(mlve_json, indent=2))
         if self.verbose:
             self.logger.info("Done copying {}".format(folder_name))
-
-
 
     def getfile(self):
         # Setting up data path
@@ -205,7 +211,7 @@ class DALSP_L2D:
         self.spirit_code_dict = self.create_spirit_dict()
         if self.list:
             print("Available Spirits")
-            print("{:5}{}".format("ID","Spirit Name"))
+            print("{:5}{}".format("ID", "Spirit Name"))
             for k, v in self.spirit_code_dict.items():
                 print("{:5}{}".format(str(k), v))
             return
@@ -219,6 +225,57 @@ class DALSP_L2D:
                 self.copy(spirit_id, folder_name)
 
 
+class DALSP_L2D_mlve:
+    def __init__(self, options):
+        self.wkPath = os.path.abspath(options.wkPath)
+        self.verbose = options.verbose
+        if self.verbose:
+            # logger to debug.log
+            FORMAT = "%(name)-10s: %(levelname)-8s %(message)s"
+            logging.basicConfig(filename='../debug.log',
+                                filemode='w', format=FORMAT)
+
+            # logger to stdout
+            console = logging.StreamHandler(sys.stdout)
+            console.setLevel(logging.INFO)
+            formatter = logging.Formatter(FORMAT)
+            console.setFormatter(formatter)
+            logging.getLogger().addHandler(console)
+            output_file_handler = logging.FileHandler("debug.log")
+            output_file_handler.setLevel(logging.INFO)
+            formatter = logging.Formatter(FORMAT)
+            output_file_handler.setFormatter(formatter)
+            logging.getLogger().addHandler(output_file_handler)
+            self.logger = logging.getLogger('DALSP_L2D_MLVE')
+            self.logger.setLevel(logging.INFO)
+
+    def genmlve(self):
+        os.chdir(self.wkPath)
+        for folder_name in os.listdir(self.wkPath):
+            mlve_json = {
+                "name": folder_name,
+                "version": "1",
+                "list": [
+                    {
+                        "character": folder_name,
+                        "costume": []
+                    }
+                ]
+            }
+
+            if os.path.isdir(folder_name):
+                for root, _, files in os.walk(os.path.join(self.wkPath, folder_name)):
+                    for file_name in files:
+                        if "bust" not in file_name and ".model3.json" in file_name:
+                            mlve_add = {
+                                "name": os.path.splitext(file_name)[0],
+                                "path": os.path.join(root, file_name)
+                            }
+                            mlve_json["list"][0]["costume"].append(mlve_add)
+            with open(folder_name + ".mlve", "w+") as f:
+                f.write(json.dumps(mlve_json, indent=2))
+
+
 if __name__ == "__main__":
     class options:
         spirit_need = "kotori"  # input spirit name needed
@@ -226,7 +283,6 @@ if __name__ == "__main__":
         # get current working folder
         wkPath = os.path.join(os.getcwd(), "example")
         verbose = True
-
 
     # Load main()
     getfile(options)
