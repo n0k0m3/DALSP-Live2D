@@ -88,8 +88,8 @@ class DALSP_L2D:
                     shutil.copy2(os.path.join(self.resPath, file_dict["Sound"]), self.path_join_mkdirs(
                         self.kanban_folder, file_dict["Sound"]))
                 except FileNotFoundError:
-                    self.logger.error(os.path.join(
-                        self.resPath, file_dict["Sound"])+" doesn't exist")
+                    if self.verbose:
+                        self.logger.error(os.path.join(self.resPath, file_dict["Sound"])+" doesn't exist")
 
     def get_bg_bgm(self):
         v = self.dress[self.dress_id]
@@ -99,15 +99,24 @@ class DALSP_L2D:
                 bg_file_base = os.path.basename(bg_file)
                 if self.verbose:
                     self.logger.info("        Copying BG " + bg_file_base)
-                shutil.copy2(bg_file, self.path_join_mkdirs(
-                    self.kanban_folder, "extra", bg_file_base))
+                try:
+                    shutil.copy2(bg_file, self.path_join_mkdirs(
+                        self.kanban_folder, "extra", bg_file_base))
+                except FileNotFoundError:
+                    if self.verbose:
+                        self.logger.error(bg_file+" doesn't exist")
+
             if v.kanbanBgm != "":
                 bgm_file = os.path.join(self.resPath, v.kanbanBgm)
                 bgm_file_base = os.path.basename(bgm_file)
                 if self.verbose:
                     self.logger.info("        Copying BGM " + bgm_file_base)
-                shutil.copy2(bgm_file, self.path_join_mkdirs(
-                    self.kanban_folder, "extra", bgm_file_base))
+                try:
+                    shutil.copy2(bgm_file, self.path_join_mkdirs(
+                        self.kanban_folder, "extra", bgm_file_base))
+                except FileNotFoundError:
+                    if self.verbose:
+                        self.logger.error(bgm_file+" doesn't exist")
 
     def copy(self, spirit_id, folder_name):
         if spirit_id is None:

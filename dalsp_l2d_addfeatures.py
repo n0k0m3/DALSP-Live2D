@@ -28,13 +28,16 @@ def add_features(dress_id, interaction, intimacy_dict, dat, string_en):
             motion_set.add(motion_name)
 
             # add subtitles
-            v = dat["FileReferences"]["Motions"][motion_name]
+            try:
+                v = dat["FileReferences"]["Motions"][motion_name]
+            except KeyError:
+                print(f"FavorID {motion_name} doesn't exist")
             s = {}
             for k, value in inter.lineShow.items():
                 try:
                     s[k] = string_en[value].text
                 except AttributeError:
-                    print("Error adding subtitle",value)
+                    print("Error adding subtitle", value)
                     continue
             s = "{$br}".join([s[x] for x in sorted(s)])
             v[0]["Text"] = s
@@ -168,7 +171,6 @@ def edit_model3(path, filename, luatablePath, dress_id, string_en, dress):
 if __name__ == "__main__":
     class options:
         dataPath = r"D:\DAL\DateALiveData"
-
 
     dress_id = 410511
     luatablePath = os.path.join(options.dataPath, r"src/lua/table")
