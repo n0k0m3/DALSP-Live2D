@@ -41,6 +41,9 @@ def main():
         'gen', help='Generate MVLE files from existing folder')
     parser_genmlve.add_argument(dest="wkPath", help="Folder to generate MLVE", metavar="WKFOLDER")
     parser_genmlve.set_defaults(func=gen)
+    parser_genmlve.add_argument("-a", "--all",
+                            action="store_true", dest="all", default=False,
+                            help="generate an mlve file contains all characters")
     parser_genmlve.add_argument("-v", "--verbose",
                             action="store_true", dest="verbose", default=False,
                             help="Print debug messages to stdout")

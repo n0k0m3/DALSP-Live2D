@@ -89,7 +89,8 @@ class DALSP_L2D:
                         self.kanban_folder, file_dict["Sound"]))
                 except FileNotFoundError:
                     if self.verbose:
-                        self.logger.error(os.path.join(self.resPath, file_dict["Sound"])+" doesn't exist")
+                        self.logger.error(os.path.join(
+                            self.resPath, file_dict["Sound"])+" doesn't exist")
 
     def get_bg_bgm(self):
         v = self.dress[self.dress_id]
@@ -237,6 +238,7 @@ class DALSP_L2D:
 class DALSP_L2D_mlve:
     def __init__(self, options):
         self.wkPath = os.path.abspath(options.wkPath)
+        self.all = options.all
         self.verbose = options.verbose
         if self.verbose:
             # logger to debug.log
@@ -260,19 +262,23 @@ class DALSP_L2D_mlve:
 
     def genmlve(self):
         os.chdir(self.wkPath)
+        mlve_json = {
+            "name": "Date A Live: Spirit Pledges L2D Costumes",
+            "version": "1",
+            "list": []
+        }
         for folder_name in os.listdir(self.wkPath):
-            mlve_json = {
-                "name": folder_name,
-                "version": "1",
-                "list": [
-                    {
-                        "character": folder_name,
-                        "costume": []
-                    }
-                ]
-            }
-
             if os.path.isdir(folder_name):
+                if not self.all:
+                    mlve_json = {
+                        "name": folder_name,
+                        "version": "1",
+                        "list": []
+                    }
+                character = {
+                    "character": folder_name,
+                    "costume": []
+                }
                 for root, _, files in os.walk(os.path.join(self.wkPath, folder_name)):
                     for file_name in files:
                         if "bust" not in file_name and ".model3.json" in file_name:
@@ -280,8 +286,13 @@ class DALSP_L2D_mlve:
                                 "name": os.path.splitext(file_name)[0],
                                 "path": os.path.join(root, file_name)
                             }
-                            mlve_json["list"][0]["costume"].append(mlve_add)
-            with open(folder_name + ".mlve", "w+") as f:
+                            character["costume"].append(mlve_add)
+                mlve_json["list"].append(character)
+                if not self.all:
+                    with open(folder_name + ".mlve", "w+") as f:
+                        f.write(json.dumps(mlve_json, indent=2))
+        if self.all:
+            with open("All.mlve", "w+") as f:
                 f.write(json.dumps(mlve_json, indent=2))
 
 
