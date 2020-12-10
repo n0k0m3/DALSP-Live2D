@@ -34,20 +34,20 @@ def main():
     parser_getfile.add_argument("-r", "--region", dest="region", default="EN",
                                 help="Specify the region of the data (EN/CN), default: EN", metavar="REGION", choices=["EN", "CN"])
     parser_getfile.set_defaults(func=get)
-    parser_getfile.add_argument("-v", "--verbose",
-                                action="store_true", dest="verbose", default=False,
-                                help="Print debug messages to stdout")
+    parser_getfile.add_argument("-q", "--quiet",
+                                action="store_true", dest="verbose", default=True,
+                                help="Suprress Logging")
     parser_genmlve = subparsers.add_parser(
         'gen', help='Generate MVLE files from existing folder')
-    parser_genmlve.add_argument(dest="wkPath", help="Folder to generate MLVE", metavar="WKFOLDER")
+    parser_genmlve.add_argument(
+        dest="wkPath", help="Folder to generate MLVE", metavar="WKFOLDER")
     parser_genmlve.set_defaults(func=gen)
     parser_genmlve.add_argument("-a", "--all",
-                            action="store_true", dest="all", default=False,
-                            help="generate an mlve file contains all characters")
-    parser_genmlve.add_argument("-v", "--verbose",
-                            action="store_true", dest="verbose", default=False,
-                            help="Print debug messages to stdout")
-
+                                action="store_true", dest="all", default=False,
+                                help="generate an mlve file contains all characters")
+    parser_genmlve.add_argument("-q", "--quiet",
+                                action="store_true", dest="verbose", default=True,
+                                help="Suprress Logging")
 
     options = parser.parse_args()
     options.func(options)

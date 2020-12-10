@@ -49,14 +49,18 @@ class DALSP_L2D:
         spirit_code_dict = {}
         for k in sorted(self.role):
             v = self.role[k]
-            if v.heroId == 0:
-                continue
             try:
-                name = self.string[int(self.hero[v.heroId].nameTextId)].text
+                name = self.role[k].enName2.strip()
             except AttributeError:
-                continue
-            if len(name.split()) == 2:
+                try:
+                    name = self.string[int(self.hero[v.heroId].nameTextId)].text.strip()
+                except AttributeError:
+                    name = self.string[self.role[k].nameId].text.strip()
+            if len(name.split()) == 2 and "Wallenstein" not in name:
                 name = " ".join(name.split()[::-1])
+            # Hotfix Ellen
+            if name == "Meizasu":
+                name =  "Ellen Mira Mathers"
             spirit_code_dict[k] = name
         return spirit_code_dict
 
@@ -132,7 +136,7 @@ class DALSP_L2D:
         modelExist = False
         if self.verbose:
             self.logger.info(
-                "Copying L2D models for {} to destination:".format(folder_name))
+                "Copying L2D models for {} to destination".format(folder_name))
         for folder in os.listdir(self.bust_kanbanPath):
             if kanban_id in folder:
                 modelExist = True
@@ -209,12 +213,14 @@ class DALSP_L2D:
         # Load required lua
         rolefile = "Role.lua"
         stringfile = "String.lua"
+        herofile = "Hero.lua"
         if self.region == "EN":
-            rolefile = "Role_en.lua"
+            #rolefile = "Role_en.lua"
             stringfile = "String_en.lua"
+            #herofile = "Hero_en.lua"
         self.role = self.readlua(os.path.join(self.luatablePath, rolefile))
         self.string = self.readlua(os.path.join(self.luatablePath, stringfile))
-        self.hero = self.readlua(os.path.join(self.luatablePath, "Hero.lua"))
+        self.hero = self.readlua(os.path.join(self.luatablePath, herofile))
         self.dress = self.readlua(os.path.join(self.luatablePath, "Dress.lua"))
 
         # Find spirit name and create folder
@@ -263,7 +269,7 @@ class DALSP_L2D_mlve:
     def genmlve(self):
         os.chdir(self.wkPath)
         mlve_json = {
-            "name": "Date A Live: Spirit Pledges L2D Costumes",
+            "name": "Date A Live - Spirit Pledges L2D Costumes",
             "version": "1",
             "list": []
         }
