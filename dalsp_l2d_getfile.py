@@ -56,12 +56,13 @@ class DALSP_L2D:
                     name = self.string[int(self.hero[v.heroId].nameTextId)].text.strip()
                 except AttributeError:
                     name = self.string[self.role[k].nameId].text.strip()
-            if len(name.split()) == 2 and "Wallenstein" not in name:
-                name = " ".join(name.split()[::-1])
+            if self.region == "EN" and "Wallenstein" not in name :
+                if len(name.split()) == 2:
+                    name = " ".join(name.split()[::-1])
             # Hotfix Ellen
             if name == "Meizasu":
                 name =  "Ellen Mira Mathers"
-            spirit_code_dict[k] = name
+            spirit_code_dict[k] = name.title()
         return spirit_code_dict
 
     def find_id_by_name(self, keyword, spirit_code_dict):
@@ -245,6 +246,7 @@ class DALSP_L2D_mlve:
     def __init__(self, options):
         self.wkPath = os.path.abspath(options.wkPath)
         self.all = options.all
+        self.region = options.region
         self.verbose = options.verbose
         if self.verbose:
             # logger to debug.log
@@ -268,8 +270,11 @@ class DALSP_L2D_mlve:
 
     def genmlve(self):
         os.chdir(self.wkPath)
+        mlve_name = "约战 - 精灵再临"
+        if self.region == "EN":
+            mlve_name = "Date A Live - Spirit Pledges L2D Costumes"
         mlve_json = {
-            "name": "Date A Live - Spirit Pledges L2D Costumes",
+            "name": mlve_name,
             "version": "1",
             "list": []
         }
