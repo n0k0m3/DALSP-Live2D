@@ -126,7 +126,7 @@ class DALSP_L2D:
 
     def copy(self, spirit_id, folder_name):
         if spirit_id is None:
-            self.logger.error("Spirit doesn't exist in the database")
+            print(f"[ERROR] Spirit {spirit_id} doesn't exist in the database")
             return
 
         # change working path to the spirit folder
@@ -152,7 +152,7 @@ class DALSP_L2D:
                     shutil.copytree(os.path.join(self.bust_kanbanPath, folder),
                                     self.path_join_mkdirs(curPath, folder))
         if modelExist is not True:
-            self.logger.error("Model for this spirit doesn't exist")
+            print(f"[ERROR] Model for spirit {spirit_id} doesn't exist")
             return
 
         # Extras files/processes
@@ -208,21 +208,24 @@ class DALSP_L2D:
     def getfile(self):
         # Setting up data path
         self.resPath = os.path.join(self.dataPath, r"res/basic")
-        self.luatablePath = os.path.join(self.dataPath, r"src/lua/table")
+        self.luatablePath = os.path.join(self.dataPath, r"src/lua/table/primary")
         self.bust_kanbanPath = os.path.join(self.resPath, r"modle/bust_kanban")
 
         # Load required lua
         rolefile = "Role.lua"
         stringfile = "String.lua"
         herofile = "Hero.lua"
+        dressfile = "Dress.lua"
         if self.region == "EN":
             #rolefile = "Role_en.lua"
-            stringfile = "String_en.lua"
+            luastringPath = os.path.join(self.dataPath, r"src/lua/table/secondary/en")
+            self.string = self.readlua(os.path.join(luastringPath, stringfile))
             #herofile = "Hero_en.lua"
+        elif self.region == "CN":
+            self.string = self.readlua(os.path.join(self.luatablePath, stringfile))
         self.role = self.readlua(os.path.join(self.luatablePath, rolefile))
-        self.string = self.readlua(os.path.join(self.luatablePath, stringfile))
         self.hero = self.readlua(os.path.join(self.luatablePath, herofile))
-        self.dress = self.readlua(os.path.join(self.luatablePath, "Dress.lua"))
+        self.dress = self.readlua(os.path.join(self.luatablePath, dressfile))
 
         # Find spirit name and create folder
         self.spirit_code_dict = self.create_spirit_dict()

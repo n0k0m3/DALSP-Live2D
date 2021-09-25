@@ -35,7 +35,7 @@ def main():
                                 help="Specify the region of the data (EN/CN), default: EN", metavar="REGION", choices=["EN", "CN"])
     parser_getfile.set_defaults(func=get)
     parser_getfile.add_argument("-q", "--quiet",
-                                action="store_true", dest="verbose", default=True,
+                                action="store_false", dest="verbose", default=True,
                                 help="Suprress Logging")
     parser_genmlve = subparsers.add_parser(
         'gen', help='Generate MVLE files from existing folder')
@@ -48,7 +48,7 @@ def main():
                                 action="store_true", dest="all", default=False,
                                 help="generate an mlve file contains all characters")
     parser_genmlve.add_argument("-q", "--quiet",
-                                action="store_true", dest="verbose", default=True,
+                                action="store_false", dest="verbose", default=True,
                                 help="Suprress Logging")
 
     options = parser.parse_args()

@@ -31,7 +31,7 @@ def add_features(dress_id, interaction, intimacy_dict, dat, string_en):
             try:
                 v = dat["FileReferences"]["Motions"][motion_name]
             except KeyError:
-                print(f"FavorID {motion_name} doesn't exist")
+                print(f"FavorID {motion_name} doesn't exist for DressID {dress_id}")
             s = {}
             for k, value in inter.lineShow.items():
                 try:
