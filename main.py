@@ -1,16 +1,16 @@
 import os
 from argparse import ArgumentParser
 
-import dalsp_l2d_getfile as l2d
+import l2d.getfiles as dalsp_l2d
 
 
 def get(options):
-    live2d = l2d.DALSP_L2D(options)
+    live2d = dalsp_l2d.DALSP_L2D(options)
     live2d.getfile()
 
 
 def gen(options):
-    live2d = l2d.DALSP_L2D_mlve(options)
+    live2d = dalsp_l2d.DALSP_L2D_mlve(options)
     live2d.genmlve()
 
 
